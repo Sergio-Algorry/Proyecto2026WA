@@ -1,0 +1,22 @@
+﻿@page "/paises"
+@inject HttpClient http
+
+<h3>Lista de Paises</h3>
+
+<p>@mensaje</p>
+
+@code {
+    private string mensaje = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            mensaje = await http.GetStringAsync("api/pais");
+        }
+        catch (Exception ex)
+        {
+            mensaje = $"Error: {ex.Message}";
+        }
+    }
+}

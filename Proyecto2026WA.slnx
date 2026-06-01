@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Proyecto2026WA.Cliente/Proyecto2026WA.Cliente.csproj" />
+  <Project Path="Proyecto2026WA.Server/Proyecto2026WA.Server.csproj" />
+</Solution>
