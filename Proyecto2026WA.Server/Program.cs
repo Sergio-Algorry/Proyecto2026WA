@@ -1,6 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using Proyecto2026WA.BD.Datos;
+
 var builder = WebApplication.CreateBuilder(args);
 
 #region Servicios
+    var connectionString = builder.Configuration
+                        .GetConnectionString("connSql") ?? 
+                        throw new InvalidOperationException("La conexión a la base de datos no funciona.");
+
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(connectionString));
+
+builder.Services.AddSwaggerGen();
     builder.Services.AddControllersWithViews();
     builder.Services.AddRazorPages();
 #endregion
@@ -12,6 +23,8 @@ var app = builder.Build();
     {
         app.UseExceptionHandler("/Error");
         app.UseHsts();
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
 
     app.UseHttpsRedirection();

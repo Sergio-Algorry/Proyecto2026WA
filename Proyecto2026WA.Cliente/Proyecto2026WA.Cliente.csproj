@@ -12,4 +12,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.8" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Proyecto2026WA.Servicio\Proyecto2026WA.Servicio.csproj" />
+    <ProjectReference Include="..\Proyecto2026WA.Shared\Proyecto2026WA.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

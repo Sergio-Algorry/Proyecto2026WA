@@ -1,4 +1,8 @@
 <Solution>
+  <Project Path="Proyecto2026WA.BD/Proyecto2026WA.BD.csproj" Id="5a1538f9-fab8-4d99-97e0-ce2e1787accf" />
   <Project Path="Proyecto2026WA.Cliente/Proyecto2026WA.Cliente.csproj" />
+  <Project Path="Proyecto2026WA.Repositorio/Proyecto2026WA.Repositorio.csproj" Id="2e902ff6-ce1f-4307-9ac1-fb78cd8dee06" />
   <Project Path="Proyecto2026WA.Server/Proyecto2026WA.Server.csproj" />
+  <Project Path="Proyecto2026WA.Servicio/Proyecto2026WA.Servicio.csproj" Id="fc1e4a92-ca60-4611-af50-71f48dea7c48" />
+  <Project Path="Proyecto2026WA.Shared/Proyecto2026WA.Shared.csproj" Id="d7f2d5f6-f050-4fc7-a64c-31eabcd11c63" />
 </Solution>
