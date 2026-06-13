@@ -24,7 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Proyecto2026WA.BD\Proyecto2026WA.BD.csproj" />
     <ProjectReference Include="..\Proyecto2026WA.Cliente\Proyecto2026WA.Cliente.csproj" />
-    <ProjectReference Include="..\Proyecto2026WA.Servicio\Proyecto2026WA.Servicio.csproj" />
+    <ProjectReference Include="..\Proyecto2026WA.Repositorio\Proyecto2026WA.Repositorio.csproj" />
     <ProjectReference Include="..\Proyecto2026WA.Shared\Proyecto2026WA.Shared.csproj" />
   </ItemGroup>
 

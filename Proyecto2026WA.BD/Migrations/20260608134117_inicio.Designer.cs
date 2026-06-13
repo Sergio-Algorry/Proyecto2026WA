@@ -11,8 +11,8 @@ using Proyecto2026WA.BD.Datos;
 namespace Proyecto2026WA.BD.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260602143347_ActualizarTablas")]
-    partial class ActualizarTablas
+    [Migration("20260608134117_inicio")]
+    partial class inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,11 @@ namespace Proyecto2026WA.BD.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
