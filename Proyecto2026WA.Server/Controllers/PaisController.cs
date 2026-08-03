@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Proyecto2026WA.BD.Datos;
 using Proyecto2026WA.BD.Datos.Entity;
-using Proyecto2026WA.Repositorio;
 using Proyecto2026WA.Shared.DTO;
 
 namespace Proyecto2026WA.Server.Controllers
@@ -12,13 +11,10 @@ namespace Proyecto2026WA.Server.Controllers
     public class PaisController : ControllerBase
     {
         private readonly AppDbContext context;
-        private readonly IPaisRepositorio repositorio;
 
-        public PaisController(AppDbContext context,
-            IPaisRepositorio repositorio)
+        public PaisController(AppDbContext context)
         {
             this.context = context;
-            this.repositorio = repositorio;
         }
 
         //[HttpGet] // api/pais
@@ -30,18 +26,12 @@ namespace Proyecto2026WA.Server.Controllers
         [HttpGet] //api/pais
         public async Task<ActionResult<List<Pais>>> Get()
         {
-            //var lista = await context.Paises.ToListAsync();
-            //if (lista == null)
-            //{
-            //    return NotFound("No se encontro elementos de la lista, VERIFICAR.");
-            //}
-            //return Ok(lista);
-            var lista = await repositorio.Select();
+            var lista = await context.Paises.ToListAsync();
             if (lista == null)
             {
                 return NotFound("No se encontro elementos de la lista, VERIFICAR.");
             }
-            if (lista.Count == 0)
+            else if (lista.Count == 0)
             {
                 return Ok("Lista sin registros.");
             }
@@ -64,7 +54,7 @@ namespace Proyecto2026WA.Server.Controllers
             {
                 return NotFound("No se encontro elementos de la lista, VERIFICAR.");
             }
-            if (lista.Count == 0)
+            else if (lista.Count == 0)
             {
                 return NotFound("Lista sin registros.");
             }
