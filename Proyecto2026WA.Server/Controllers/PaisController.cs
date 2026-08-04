@@ -78,6 +78,46 @@ namespace Proyecto2026WA.Server.Controllers
             return Ok(DTO);
         }
 
+        [HttpPost] //api/pais
+        public async Task<ActionResult<int>> Post(PaisDTO paisDTO)
+        {
+            Pais entidad = new Pais();
+            entidad.Codigo = paisDTO.Codigo;
+            entidad.Nombre = paisDTO.Nombre;
+            context.Paises.Add(entidad);
+            await context.SaveChangesAsync();
+            return Ok(entidad.Id);
+        }
 
+        [HttpPut("{id:int}")] //api/pais/5
+        public async Task<ActionResult<bool>> Put(int id, PaisDTO paisDTO)
+        {
+            if (id != paisDTO.Id)
+            {
+                return BadRequest("Datos incorrectos, no se actualizó.");
+            }
+            var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
+            if (entidad is null)
+            {
+                return NotFound($"No existe el registro con id: {id}.");
+            }
+            entidad.Codigo = paisDTO.Codigo;
+            entidad.Nombre = paisDTO.Nombre;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}")] //api/pais/5
+        public async Task<ActionResult<bool>> Delete(int id)
+        {
+            var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
+            if (entidad is null)
+            {
+                return NotFound($"No existe el registro con id: {id}.");
+            }
+            context.Paises.Remove(entidad);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
