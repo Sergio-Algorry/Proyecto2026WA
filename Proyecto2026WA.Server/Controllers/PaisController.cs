@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Proyecto2026WA.BD.Datos;
 using Proyecto2026WA.BD.Datos.Entity;
 using Proyecto2026WA.Shared.DTO;
+using Proyecto2026WA.Repositorio.Repositorios;
 
 namespace Proyecto2026WA.Server.Controllers
 {
@@ -11,10 +12,13 @@ namespace Proyecto2026WA.Server.Controllers
     public class PaisController : ControllerBase
     {
         private readonly AppDbContext context;
+        private readonly IPaisRepositorio repositorio;
 
-        public PaisController(AppDbContext context)
+        public PaisController(AppDbContext context,
+                              IPaisRepositorio repositorio)
         {
             this.context = context;
+            this.repositorio = repositorio;
         }
 
         //[HttpGet] // api/pais
@@ -26,7 +30,8 @@ namespace Proyecto2026WA.Server.Controllers
         [HttpGet] //api/pais
         public async Task<ActionResult<List<Pais>>> Get()
         {
-            var lista = await context.Paises.ToListAsync();
+            //var lista = await context.Set<Pais>().ToListAsync();
+            var lista = await repositorio.Select();
             if (lista == null)
             {
                 return NotFound("No se encontro elementos de la lista, VERIFICAR.");
@@ -42,14 +47,15 @@ namespace Proyecto2026WA.Server.Controllers
         [HttpGet("listapais")] //api/pais/listapais
         public async Task<ActionResult<List<PaisListadoDTO>>> ListaPais()
         {
-            var lista = await context.Paises
-                        .Select(p => new PaisListadoDTO
-                        {
-                            Id = p.Id,
-                            DatosPais = $"{p.Codigo} - {p.Nombre}"
-                        })
-                        .ToListAsync();
+            //var lista = await context.Paises
+            //            .Select(p => new PaisListadoDTO
+            //            {
+            //                Id = p.Id,
+            //                DatosPais = $"{p.Codigo} - {p.Nombre}"
+            //            })
+            //            .ToListAsync();
 
+            var lista = await repositorio.ListaPais();
             if (lista == null)
             {
                 return NotFound("No se encontro elementos de la lista, VERIFICAR.");

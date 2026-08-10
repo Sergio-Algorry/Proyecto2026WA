@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Proyecto2026WA.BD.Datos;
+using Proyecto2026WA.BD.Datos.Entity;
+using Proyecto2026WA.Repositorio.Repositorios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IPaisRepositorio, PaisRepositorio>();
 
 #endregion
 
