@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Proyecto2026WA.BD.Datos
 {
-    public class EntityBase
+    public class EntityBase : IEntityBase
     {
         public int Id { get; set; }
     }

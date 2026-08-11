@@ -17,7 +17,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<IPaisRepositorio, PaisRepositorio>();
+#region Inyeccion de dependencias
+    builder.Services.AddScoped<IPaisRepositorio, PaisRepositorio>();
+#endregion
 
 #endregion
 

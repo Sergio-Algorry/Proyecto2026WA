@@ -11,13 +11,10 @@ namespace Proyecto2026WA.Server.Controllers
     [Route("api/pais")]
     public class PaisController : ControllerBase
     {
-        private readonly AppDbContext context;
         private readonly IPaisRepositorio repositorio;
 
-        public PaisController(AppDbContext context,
-                              IPaisRepositorio repositorio)
+        public PaisController(IPaisRepositorio repositorio)
         {
-            this.context = context;
             this.repositorio = repositorio;
         }
 
@@ -31,6 +28,7 @@ namespace Proyecto2026WA.Server.Controllers
         public async Task<ActionResult<List<Pais>>> Get()
         {
             //var lista = await context.Set<Pais>().ToListAsync();
+
             var lista = await repositorio.Select();
             if (lista == null)
             {
@@ -71,7 +69,8 @@ namespace Proyecto2026WA.Server.Controllers
         [HttpGet("{id:int}")]  //api/Pais/5
         public async Task<ActionResult<PaisDTO>> GetById(int id)
         {
-            var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
+            //var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
+            var entidad = await repositorio.SelectById(id);
             if (entidad is null)
             {
                 return NotFound($"No existe el registro con id: {id}.");
@@ -90,8 +89,12 @@ namespace Proyecto2026WA.Server.Controllers
             Pais entidad = new Pais();
             entidad.Codigo = paisDTO.Codigo;
             entidad.Nombre = paisDTO.Nombre;
-            context.Paises.Add(entidad);
-            await context.SaveChangesAsync();
+
+            //context.Paises.Add(entidad);
+            //await context.SaveChangesAsync();
+
+            await repositorio.Insert(entidad);
+
             return Ok(entidad.Id);
         }
 
@@ -102,28 +105,43 @@ namespace Proyecto2026WA.Server.Controllers
             {
                 return BadRequest("Datos incorrectos, no se actualizó.");
             }
-            var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
-            if (entidad is null)
-            {
-                return NotFound($"No existe el registro con id: {id}.");
-            }
+
+            //var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
+            //if (entidad is null)
+            //{
+            //    return NotFound($"No existe el registro con id: {id}.");
+            //}
+            //entidad.Codigo = paisDTO.Codigo;
+            //entidad.Nombre = paisDTO.Nombre;
+
+            //await context.SaveChangesAsync();
+
+            var entidad = new Pais();
+            entidad.Id = paisDTO.Id;
             entidad.Codigo = paisDTO.Codigo;
             entidad.Nombre = paisDTO.Nombre;
-            await context.SaveChangesAsync();
-            return Ok();
+            var resultado = await repositorio.Update(entidad);
+
+            return Ok(resultado);
         }
 
         [HttpDelete("{id:int}")] //api/pais/5
         public async Task<ActionResult<bool>> Delete(int id)
         {
-            var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
-            if (entidad is null)
+            //var entidad = await context.Paises.FirstOrDefaultAsync(x => x.Id == id);
+            //if (entidad is null)
+            //{
+            //    return NotFound($"No existe el registro con id: {id}.");
+            //}
+            //context.Paises.Remove(entidad);
+            //await context.SaveChangesAsync();
+            var resultado = await repositorio.Delete(id);
+            if(!resultado)
             {
                 return NotFound($"No existe el registro con id: {id}.");
             }
-            context.Paises.Remove(entidad);
-            await context.SaveChangesAsync();
-            return Ok();
+
+            return Ok(true);
         }
     }
 }
