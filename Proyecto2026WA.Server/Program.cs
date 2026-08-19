@@ -19,6 +19,7 @@ builder.Services.AddRazorPages();
 
 #region Inyeccion de dependencias
     builder.Services.AddScoped<IPaisRepositorio, PaisRepositorio>();
+    builder.Services.AddScoped<IEstadoRepositorio, EstadoRepositorio>();
 #endregion
 
 #endregion

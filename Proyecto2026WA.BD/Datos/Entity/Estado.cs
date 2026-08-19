@@ -12,7 +12,7 @@ namespace Proyecto2026WA.BD.Datos.Entity
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "El datos es obligatorio")]
-        public int IdPais { get; set; }
+        public int PaisId { get; set; }
         public Pais Pais { get; set; }
     }
 }

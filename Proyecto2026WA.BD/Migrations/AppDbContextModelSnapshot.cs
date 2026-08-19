@@ -16,7 +16,7 @@ namespace Proyecto2026WA.BD.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.8")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,9 +33,6 @@ namespace Proyecto2026WA.BD.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("IdLocalida")
-                        .HasColumnType("int");
 
                     b.Property<int>("LocalidadId")
                         .HasColumnType("int");
@@ -59,9 +56,6 @@ namespace Proyecto2026WA.BD.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdPais")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -87,9 +81,6 @@ namespace Proyecto2026WA.BD.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EstadoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdEstado")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
@@ -164,12 +155,6 @@ namespace Proyecto2026WA.BD.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DomicilioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdDomicilio")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPersona")
                         .HasColumnType("int");
 
                     b.Property<int>("PersonaId")

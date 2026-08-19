@@ -11,7 +11,7 @@ namespace Proyecto2026WA.BD.Datos.Entity
         [MaxLength(150, ErrorMessage = "Máxima longitud 150 caracteres.")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El datos es obligatorio")]
-        public int IdEstado { get; set; }
+        public int EstadoId { get; set; }
         public Estado Estado { get; set; }
     }
 }

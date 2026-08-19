@@ -16,6 +16,17 @@ namespace Proyecto2026WA.Repositorio.Repositorios
         }
 
         //existe
+        public async Task<bool> Existe(E entity)
+        {
+            try
+            {
+                return await context.Set<E>().AnyAsync(e => e == entity);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
 
         //select
         public async Task<List<E>> Select()
@@ -31,9 +42,16 @@ namespace Proyecto2026WA.Repositorio.Repositorios
         //insert
         public async Task<E> Insert(E entity)
         {
-            await context.Set<E>().AddAsync(entity);
-            await context.SaveChangesAsync();
-            return entity;
+            try
+            {
+                await context.Set<E>().AddAsync(entity);
+                await context.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         //update

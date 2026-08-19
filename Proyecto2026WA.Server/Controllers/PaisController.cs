@@ -84,11 +84,11 @@ namespace Proyecto2026WA.Server.Controllers
         }
 
         [HttpPost] //api/pais
-        public async Task<ActionResult<int>> Post(PaisDTO paisDTO)
+        public async Task<ActionResult<int>> Post(PaisDTO DTO)
         {
             Pais entidad = new Pais();
-            entidad.Codigo = paisDTO.Codigo;
-            entidad.Nombre = paisDTO.Nombre;
+            entidad.Codigo = DTO.Codigo;
+            entidad.Nombre = DTO.Nombre;
 
             //context.Paises.Add(entidad);
             //await context.SaveChangesAsync();
@@ -99,9 +99,9 @@ namespace Proyecto2026WA.Server.Controllers
         }
 
         [HttpPut("{id:int}")] //api/pais/5
-        public async Task<ActionResult<bool>> Put(int id, PaisDTO paisDTO)
+        public async Task<ActionResult<bool>> Put(int id, PaisDTO DTO)
         {
-            if (id != paisDTO.Id)
+            if (id != DTO.Id)
             {
                 return BadRequest("Datos incorrectos, no se actualizó.");
             }
@@ -117,9 +117,9 @@ namespace Proyecto2026WA.Server.Controllers
             //await context.SaveChangesAsync();
 
             var entidad = new Pais();
-            entidad.Id = paisDTO.Id;
-            entidad.Codigo = paisDTO.Codigo;
-            entidad.Nombre = paisDTO.Nombre;
+            entidad.Id = DTO.Id;
+            entidad.Codigo = DTO.Codigo;
+            entidad.Nombre = DTO.Nombre;
             var resultado = await repositorio.Update(entidad);
 
             return Ok(resultado);

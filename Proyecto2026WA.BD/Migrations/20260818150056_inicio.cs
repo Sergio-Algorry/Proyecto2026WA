@@ -46,7 +46,6 @@ namespace Proyecto2026WA.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    IdPais = table.Column<int>(type: "int", nullable: false),
                     PaisId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -67,7 +66,6 @@ namespace Proyecto2026WA.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    IdEstado = table.Column<int>(type: "int", nullable: false),
                     EstadoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -89,7 +87,6 @@ namespace Proyecto2026WA.BD.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Calle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Numero = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    IdLocalida = table.Column<int>(type: "int", nullable: false),
                     LocalidadId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,9 +106,7 @@ namespace Proyecto2026WA.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPersona = table.Column<int>(type: "int", nullable: false),
                     PersonaId = table.Column<int>(type: "int", nullable: false),
-                    IdDomicilio = table.Column<int>(type: "int", nullable: false),
                     DomicilioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

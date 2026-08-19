@@ -16,7 +16,7 @@ namespace Proyecto2026WA.BD.Datos.Entity
         public string Numero { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El datos es obligatorio")]
-        public int IdLocalida { get; set; }
+        public int LocalidadId { get; set; }
         public Localidad Localidad { get; set; }
     }
 }
