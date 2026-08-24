@@ -46,6 +46,31 @@ namespace Proyecto2026WA.Server.Controllers
             DTO.Id = entidad.Id;
             DTO.PaisId = entidad.PaisId;
             DTO.Nombre = entidad.Nombre;
+            DTO.Codigo = entidad.Codigo;
+
+            return Ok(DTO);
+        }
+
+        [HttpGet("{codigo}")]  //api/Estado/cb
+        public async Task<ActionResult<EstadoResumenDTO>> GetByCodigo(string codigo)
+        {
+            var entidad = await repositorio.SelectByCodigo(codigo);
+            if (entidad is null)
+            {
+                return NotFound($"No existe el registro con código: {codigo}.");
+            }
+
+            return Ok(entidad);
+        }
+
+        [HttpGet("SelectByIdCompleto/{id:int}")]  //api/Estado/SelectByIdCompleto/5
+        public async Task<ActionResult<EstadoCompletoDTO>> GetByCodigoCompleto(int id)
+        {
+            var DTO = await repositorio.SelectByIdCompleto(id);
+            if (DTO is null)
+            {
+                return NotFound($"No existe el registro con id: {id}.");
+            }
 
             return Ok(DTO);
         }
@@ -56,6 +81,7 @@ namespace Proyecto2026WA.Server.Controllers
             Estado entidad = new Estado();
             entidad.PaisId = DTO.PaisId;
             entidad.Nombre = DTO.Nombre;
+            entidad.Codigo = DTO.Codigo;
 
             await repositorio.Insert(entidad);
 
@@ -73,6 +99,7 @@ namespace Proyecto2026WA.Server.Controllers
             entidad.Id = DTO.Id;
             entidad.PaisId = DTO.PaisId;
             entidad.Nombre = DTO.Nombre;
+            entidad.Codigo = DTO.Codigo;
             var resultado = await repositorio.Update(entidad);
 
             return Ok(resultado);

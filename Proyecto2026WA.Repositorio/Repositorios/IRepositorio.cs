@@ -1,4 +1,6 @@
-﻿namespace Proyecto2026WA.Repositorio.Repositorios
+﻿using Proyecto2026WA.Shared.DTO;
+
+namespace Proyecto2026WA.Repositorio.Repositorios
 {
     public interface IRepositorio<E> where E : class
     {
@@ -6,6 +8,7 @@
         Task<bool> Existe(E entity);
         Task<E> Insert(E entity);
         Task<List<E>> Select();
+        Task<EstadoResumenDTO?> SelectByCodigo(string codigo);
         Task<E?> SelectById(int id);
         Task<bool> Update(E entity);
     }

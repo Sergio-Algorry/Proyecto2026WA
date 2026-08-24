@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Proyecto2026WA.Shared.DTO;
 
 namespace Proyecto2026WA.Repositorio.Repositorios
 {
@@ -88,6 +89,11 @@ namespace Proyecto2026WA.Repositorio.Repositorios
             context.Set<E>().Remove(entidad);
             await context.SaveChangesAsync();
             return true;
+        }
+
+        public Task<EstadoResumenDTO?> SelectByCodigo(string codigo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
