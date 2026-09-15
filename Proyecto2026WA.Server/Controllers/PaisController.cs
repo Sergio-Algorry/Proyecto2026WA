@@ -25,10 +25,8 @@ namespace Proyecto2026WA.Server.Controllers
         //}
 
         [HttpGet] //api/pais
-        public async Task<ActionResult<List<Pais>>> Get()
+        public async Task<ActionResult<List<PaisListadoDTO>>> Get()
         {
-            //var lista = await context.Set<Pais>().ToListAsync();
-
             var lista = await repositorio.Select();
             if (lista == null)
             {
@@ -38,8 +36,15 @@ namespace Proyecto2026WA.Server.Controllers
             {
                 return Ok("Lista sin registros.");
             }
+            var listaDTO = lista
+                            .Select(p => new PaisListadoDTO
+                            {
+                                Id = p.Id,
+                                DatosPais = $"{p.Codigo} - {p.Nombre}"
+                            })
+                            .ToList();
 
-            return Ok(lista);
+            return Ok(listaDTO);
         }
 
         [HttpGet("listapais")] //api/pais/listapais

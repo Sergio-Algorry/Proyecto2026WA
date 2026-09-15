@@ -1,22 +1,77 @@
 ﻿@page "/paises"
+@using System.Text.Json
+@using Proyecto2026WA.Shared.DTO
 @inject HttpClient http
 
 <h3>Lista de Paises</h3>
 
+<br>
+<table>
+    <tr>
+        <th>Paises</th>
+    </tr>
+    @if (paises == null)
+    {
+        <p>Buscando ....</p>
+    }
+    else if (paises.Count == 0)
+    {
+        <p>No existen paises cargados en esta lista</p>
+    }
+    else
+    {
+        @foreach (var pais in paises)
+        {
+            <tr>
+                <td>@pais.DatosPais</td>
+            </tr>
+        }
+    }
+</table>
+
 <p>@mensaje</p>
 
 @code {
+    List<PaisListadoDTO>? paises;
     private string mensaje = "";
 
     protected override async Task OnInitializedAsync()
     {
+        await LeerPaises();
+    }
+
+    private async Task LeerPaises()
+    {
         try
         {
-            mensaje = await http.GetStringAsync("api/pais");
+            var response = await http.GetAsync("api/pais/listapais");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                mensaje = $"Error en la llamada HTTP. Código de estado: {response.StatusCode}";
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            paises = JsonSerializer.Deserialize<List<PaisListadoDTO>>(content,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
         }
         catch (Exception ex)
         {
             mensaje = $"Error: {ex.Message}";
         }
+
+        // // paises = await http.GetFromJsonAsync<List<PaisListadoDTO>>("api/Pais/listapais");
+        // var resp = await http.Get<List<PaisListadoDTO>>("api/pais/listapais");
+        // if (!resp.Error)
+        // {
+        //     paises = resp.Respuesta;
+        // }
+        // else
+        // {
+        //     Mensaje = resp.ObtenerError();
+        // }
     }
 }
