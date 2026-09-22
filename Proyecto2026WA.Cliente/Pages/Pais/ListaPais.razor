@@ -1,8 +1,9 @@
 ﻿@page "/paises"
 @using System.Text.Json
 @using Proyecto2026WA.Shared.DTO
-@inject HttpClient http
-
+@using Proyecto2026WA.Servicio.ServicioHTTP
+@inject IHttpService http
+@* @inject HttpClient http*@
 <h3>Lista de Paises</h3>
 
 <br>
@@ -44,19 +45,30 @@
     {
         try
         {
-            var response = await http.GetAsync("api/pais/listapais");
+            var resp = await http.GetAsync<List<PaisListadoDTO>>("api/pais/listapais");
 
-            if (!response.IsSuccessStatusCode)
+            if(resp.Error)
             {
-                mensaje = $"Error en la llamada HTTP. Código de estado: {response.StatusCode}";
+                mensaje = resp.Mensaje;
+            }
+            else
+            {
+                paises = resp.Respuesta;
             }
 
-            var content = await response.Content.ReadAsStringAsync();
-            paises = JsonSerializer.Deserialize<List<PaisListadoDTO>>(content,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+            // var response = await http.GetAsync("api/pais/listapais");
+
+            // if (!response.IsSuccessStatusCode)
+            // {
+            //     mensaje = $"Error en la llamada HTTP. Código de estado: {response.StatusCode}";
+            // }
+
+            // var content = await response.Content.ReadAsStringAsync();
+            // paises = JsonSerializer.Deserialize<List<PaisListadoDTO>>(content,
+            //     new JsonSerializerOptions
+            //     {
+            //         PropertyNameCaseInsensitive = true
+            //     });
         }
         catch (Exception ex)
         {

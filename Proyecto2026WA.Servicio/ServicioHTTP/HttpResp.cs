@@ -12,11 +12,24 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
         public string? Mensaje 
         { 
             get => ObtenerError(); 
-            //set; 
+            set; 
+        }
+
+        public HttpResp(T? dato, bool error, HttpResponseMessage? response, string? mensaje)
+        {
+            Respuesta = dato;
+            Error = error;
+            Response = response;
+            Mensaje = mensaje;
         }
 
         public string ObtenerError()
         {
+            if(Mensaje != null && Mensaje != string.Empty)
+            {
+                return Mensaje;
+            }
+
             if (Response == null)
             {
                 return "No se obtuvo respuesta del servidor.";
