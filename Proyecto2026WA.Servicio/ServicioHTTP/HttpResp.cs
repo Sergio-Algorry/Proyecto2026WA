@@ -9,10 +9,11 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
         public bool Error { get; set; }
         public T? Respuesta { get; set; }
         public HttpResponseMessage? Response { get; set; }
-        public string? Mensaje 
-        { 
-            get => ObtenerError(); 
-            set; 
+        private string? _mensaje;
+        public string? Mensaje
+        {
+            get => !string.IsNullOrEmpty(_mensaje) ? _mensaje : ObtenerError();
+            set => _mensaje = value;
         }
 
         public HttpResp(T? dato, bool error, HttpResponseMessage? response, string? mensaje)
@@ -25,9 +26,9 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
 
         public string ObtenerError()
         {
-            if(Mensaje != null && Mensaje != string.Empty)
+            if (_mensaje != null && _mensaje != string.Empty)
             {
-                return Mensaje;
+                return _mensaje;
             }
 
             if (Response == null)
@@ -36,11 +37,11 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
             }
             else if (Response.IsSuccessStatusCode)
             {
-                return string.Empty; 
+                return string.Empty;
             }
             else
             {
-                string Mensaje = "";
+                string mensaje = "";
                 var statusCode = Response.StatusCode;
 
                 #region Mensaje segun StatusCode
@@ -55,7 +56,7 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
                     case System.Net.HttpStatusCode.EarlyHints:
                         break;
                     case System.Net.HttpStatusCode.OK:
-                        Mensaje = "Solicitud exitosa.";
+                        mensaje = "Solicitud exitosa.";
                         break;
                     case System.Net.HttpStatusCode.Created:
                         break;
@@ -92,21 +93,21 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
                     case System.Net.HttpStatusCode.RedirectKeepVerb:
                         break;
                     case System.Net.HttpStatusCode.PermanentRedirect:
-                        Mensaje = "Redirección permanente.";
+                        mensaje = "Redirección permanente.";
                         break;
                     case System.Net.HttpStatusCode.BadRequest:
-                        Mensaje = "Solicitud incorrecta - Intente nuevamente.";
+                        mensaje = "Solicitud incorrecta - Intente nuevamente.";
                         break;
                     case System.Net.HttpStatusCode.Unauthorized:
-                        Mensaje = "No autorizado.";
+                        mensaje = "No autorizado.";
                         break;
                     case System.Net.HttpStatusCode.PaymentRequired:
                         break;
                     case System.Net.HttpStatusCode.Forbidden:
-                        Mensaje = "Acceso denegado.";
+                        mensaje = "Acceso denegado.";
                         break;
                     case System.Net.HttpStatusCode.NotFound:
-                        Mensaje = "Recurso no encontrado.";
+                        mensaje = "Recurso no encontrado.";
                         break;
                     case System.Net.HttpStatusCode.MethodNotAllowed:
                         break;
@@ -179,7 +180,7 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
                 }
                 #endregion
 
-                return Mensaje;
+                return mensaje;
             }
         }
     }

@@ -1,0 +1,42 @@
+﻿@page "/paises/crear"
+@using Proyecto2026WA.Shared.DTO
+
+<h3>REGISTRAR UN PAIS</h3>
+
+<EditForm Model="pais" OnValidSubmit="Grabar" FormName="CrearPais">
+<div class="form-group">
+<label>
+    Código de Pais:
+</label>
+<div>
+    <InputText class="form-control" @bind-Value="pais.Codigo" /> 
+</div>
+</div>
+<br />
+<div class="form-group">
+    <label>
+        Nombre del Pais:
+    </label>
+    <div>
+        <InputText class="form-control" @bind-Value="pais.Nombre" />
+    </div>
+</div>
+<br />
+<button class="btn btn-primary" type="submit">Grabar</button>
+<button class="btn btn-primary" onclick="Cancelar">Cancelar</button>
+</EditForm>
+
+
+
+@code {
+    private PaisDTO pais = new PaisDTO();
+
+    private async Task Grabar()
+    {
+    }
+
+    private async Task Cancelar()
+    {
+    }
+
+}
