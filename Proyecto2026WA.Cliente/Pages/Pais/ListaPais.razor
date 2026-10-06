@@ -1,5 +1,6 @@
 ﻿@page "/paises"
 @using System.Text.Json
+@using Proyecto2026WA.Cliente.Pages.Shared
 @using Proyecto2026WA.Shared.DTO
 @using Proyecto2026WA.Servicio.ServicioHTTP
 @inject IHttpService http
@@ -27,16 +28,37 @@
         {
             <tr>
                 <td>@pais.DatosPais (@pais.Id)</td>
+                <td>
+                    <a class="btn btn-primary" href="/paises/editar/@pais.Id">Actualizar</a>
+                </td>
+                <td>
+                    <button class="btn btn-danger" @onclick="() => Borrar(pais.Id)">Eliminar</button>
+                </td>
             </tr>
         }
     }
 </table>
-
+<br />
 <p>@mensaje</p>
+<br />
+
+<Confirmacion @ref="confirmacion" 
+              Titulo="Confirmar Eliminación"
+              onCancel="Cancelar"
+              onConfirm="EliminarPais"
+              textCancelar="No"
+              textOk="Sí">
+    <p>Está por eliminar un pais</p>
+    <br />
+    <p>¿Está seguro?</p>
+</Confirmacion>
 
 @code {
     List<PaisListadoDTO>? paises;
     private string mensaje = "";
+
+    Confirmacion confirmacion;
+    private int idSeleccionado = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,7 +71,7 @@
         {
             var resp = await http.GetAsync<List<PaisListadoDTO>>("api/pais/listapais");
 
-            if(resp.Error)
+            if (resp.Error)
             {
                 mensaje = resp.Mensaje;
             }
@@ -87,5 +109,40 @@
         // {
         //     Mensaje = resp.ObtenerError();
         // }
+    }
+
+    private async Task Borrar(int id)
+    {
+        idSeleccionado = id;
+        confirmacion.Ver();
+    }
+
+    private async Task EliminarPais()
+    {
+        try
+        {
+            var resp = await http.DeleteAsync<bool>($"api/pais/{idSeleccionado}");
+            if (resp.Error)
+            {
+                mensaje = resp.Mensaje!;
+            }
+            else
+            {
+                confirmacion.Ocultar();
+                mensaje = "El pais ha sido eliminado correctamente";
+                idSeleccionado = 0;
+                await LeerPaises();
+            }
+        }
+        catch (Exception ex)
+        {
+            mensaje = $"Error: {ex.Message}";
+        }
+    }
+
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        idSeleccionado = 0;
     }
 }
