@@ -1,42 +1,62 @@
 ﻿@page "/paises/crear"
+@using Proyecto2026WA.Servicio.ServicioHTTP
 @using Proyecto2026WA.Shared.DTO
+
+@inject IHttpService http
+@inject NavigationManager navHttp
 
 <h3>REGISTRAR UN PAIS</h3>
 
-<EditForm Model="pais" OnValidSubmit="Grabar" FormName="CrearPais">
-<div class="form-group">
-<label>
-    Código de Pais:
-</label>
-<div>
-    <InputText class="form-control" @bind-Value="pais.Codigo" /> 
-</div>
-</div>
-<br />
-<div class="form-group">
-    <label>
-        Nombre del Pais:
-    </label>
-    <div>
-        <InputText class="form-control" @bind-Value="pais.Nombre" />
+<EditForm Model="pais" OnValidSubmit="Grabar" FormName="CrearPaisForm">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>
+            Código de Pais:
+        </label>
+        <div>
+            <InputText class="form-control" @bind-Value="pais.Codigo" />
+            <ValidationMessage For="@(() => pais.Codigo)" />
+        </div>
     </div>
-</div>
-<br />
-<button class="btn btn-primary" type="submit">Grabar</button>
-<button class="btn btn-primary" onclick="Cancelar">Cancelar</button>
+    <br />
+    <div class="form-group">
+        <label>
+            Nombre del Pais:
+        </label>
+        <div>
+            <InputText class="form-control" @bind-Value="pais.Nombre" />
+            <ValidationMessage For="@(() => pais.Nombre)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Grabar</button>
+    <button class="btn btn-primary" @onclick="Cancelar">Cancelar</button>
 </EditForm>
-
+<br />
+<p>@Mensaje</p>
 
 
 @code {
     private PaisDTO pais = new PaisDTO();
+    string Mensaje = "";
 
     private async Task Grabar()
     {
+        var httpRespuesta = await http.PostAsync<PaisDTO, int>("api/pais", pais);
+        if (!httpRespuesta.Error)
+        {
+            //Mensaje = $"El ID es: " + httpRespuesta.Respuesta.ToString() ;
+            navHttp.NavigateTo("/paises");
+        }
+        else
+        {
+            Mensaje = httpRespuesta.Mensaje;
+        }
     }
 
-    private async Task Cancelar()
+    private void Cancelar()
     {
+        navHttp.NavigateTo("/paises");
     }
 
 }

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Proyecto2026WA.Servicio.ServicioHTTP
 {
-    public class HttpResp<T>
+    public class HttpResp<TResp>
     {
         public bool Error { get; set; }
-        public T? Respuesta { get; set; }
+        public TResp? Respuesta { get; set; }
         public HttpResponseMessage? Response { get; set; }
         private string? _mensaje;
         public string? Mensaje
@@ -16,7 +16,7 @@ namespace Proyecto2026WA.Servicio.ServicioHTTP
             set => _mensaje = value;
         }
 
-        public HttpResp(T? dato, bool error, HttpResponseMessage? response, string? mensaje)
+        public HttpResp(TResp? dato, bool error, HttpResponseMessage? response, string? mensaje)
         {
             Respuesta = dato;
             Error = error;
